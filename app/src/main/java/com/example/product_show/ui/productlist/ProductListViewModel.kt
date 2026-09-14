@@ -43,8 +43,8 @@ class ProductListViewModel @Inject constructor(private val getProductListUseCase
                     pagingSourceFactory = {
                         ProductPagingSource(searchInput = query, getProductListUseCase)
                     }
-                ).flow.cachedIn(viewModelScope)
-            }
+                ).flow
+            }.cachedIn(viewModelScope)
 
     fun searchProduct(input: String) {
         _searchText.update { input }
