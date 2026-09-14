@@ -15,7 +15,7 @@ class ProductShowRepoImpl @Inject constructor(private val networkDataSource: Pro
         val response = if (searchQuery.isEmpty()) {
             networkDataSource.getProductList(limit = pageSize, skip = skip)
         } else {
-            networkDataSource.getProductList(limit = pageSize, skip = skip)
+            networkDataSource.searchProductList(limit = pageSize, skip = skip, q = searchQuery)
         }
 
         val productList = response?.products?.toModel() ?: emptyList()
@@ -23,5 +23,9 @@ class ProductShowRepoImpl @Inject constructor(private val networkDataSource: Pro
             (response?.skip ?: 0) + (response?.limit ?: 0)
         }
         return Page(items = productList, nextPage = nextSkip)
+    }
+
+    override suspend fun getProductDetail(productId: Int): Product {
+        return networkDataSource.getProductDetail(id = productId)?.toModel() ?: Product.empty
     }
 }
