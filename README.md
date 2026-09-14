@@ -66,3 +66,9 @@ To run the unit tests, use the following command:
 ```
 
 Tests are located in: `app/src/test/java/com/example/product_show/`
+
+## 🤖 AI Usage
+
+This project utilized AI assistance (Gemini in Android Studio) for the following:
+- **Unit Testing**: Generating comprehensive unit tests for the Repository, UseCases, and ViewModels using MockK and Turbine.
+- **Documentation**: Structuring and writing this `README.md` file, including the project architecture visualization.
