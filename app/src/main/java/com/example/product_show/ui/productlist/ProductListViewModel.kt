@@ -35,6 +35,7 @@ class ProductListViewModel @Inject constructor(private val getProductListUseCase
             .flatMapLatest { query ->
                 Pager(
                     config = PagingConfig(
+                        initialLoadSize = 20,
                         pageSize = 20,
                         enablePlaceholders = false,
                         prefetchDistance = 10,

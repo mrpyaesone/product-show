@@ -11,7 +11,7 @@ class ProductPagingSource(
 ) : PagingSource<Int, Product>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
-        val page = params.key ?: 1
+        val page = params.key ?: 0
 
         return try {
             val result = getProductListUseCase(
@@ -20,7 +20,7 @@ class ProductPagingSource(
 
             LoadResult.Page(
                 data = result.items,
-                prevKey = if (page == 1) {
+                prevKey = if (page == 0) {
                     null
                 } else {
                     page - 1
@@ -35,7 +35,6 @@ class ProductPagingSource(
 
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { position ->
-
             state.closestPageToPosition(position)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(position)?.nextKey?.minus(1)
         }
