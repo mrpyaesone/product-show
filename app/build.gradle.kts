@@ -95,4 +95,7 @@ dependencies {
 
     // paging
     implementation(libs.paging.compose)
+
+    // leakCanary
+    debugImplementation(libs.leakcanary)
 }
