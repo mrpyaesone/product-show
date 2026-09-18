@@ -10,6 +10,10 @@ class ProductPagingSource(
     private val getProductListUseCase: GetProductListUseCase
 ) : PagingSource<Int, Product>() {
 
+    companion object {
+        private const val PAGE_SIZE = 20
+    }
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         val page = params.key ?: 0
 
@@ -23,9 +27,13 @@ class ProductPagingSource(
                 prevKey = if (page == 0) {
                     null
                 } else {
-                    page - 1
+                    page - PAGE_SIZE
                 },
-                nextKey = result.nextPage
+                nextKey = if (result.items.size < PAGE_SIZE) {
+                    null
+                } else {
+                    result.nextPage
+                }
             )
 
         } catch (e: Exception) {
@@ -35,8 +43,8 @@ class ProductPagingSource(
 
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { position ->
-            state.closestPageToPosition(position)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(position)?.nextKey?.minus(1)
+            state.closestPageToPosition(position)?.prevKey?.plus(PAGE_SIZE)
+                ?: state.closestPageToPosition(position)?.nextKey?.minus(PAGE_SIZE)
         }
     }
 }
