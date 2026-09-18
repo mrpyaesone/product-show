@@ -49,6 +49,7 @@ app/src/main/java/com/example/product_show/
 ### Prerequisites
 - Android Studio Quail 4 or newer.
 - JDK 11 or higher.
+- JVM 25 for AGP 9.6.0
 
 ### Build and Run
 1. Clone the repository.
