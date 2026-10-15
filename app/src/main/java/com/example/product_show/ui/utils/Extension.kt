@@ -4,6 +4,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
 import androidx.compose.runtime.Composable
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 
 inline fun <T : Any> LazyStaggeredGridScope.optimizedLazyList(
     items: LazyPagingItems<T>,
@@ -13,8 +15,8 @@ inline fun <T : Any> LazyStaggeredGridScope.optimizedLazyList(
 ) {
     items(
         count = items.itemCount,
-        key = if (key != null) { index -> items[index]?.let(key) as Any } else null,
-        contentType = { index -> items[index]?.let(contentType) }
+        key = items.itemKey(key),
+        contentType = items.itemContentType(contentType)
     ) { index ->
         items[index]?.let { item ->
             itemContent(index, item)

@@ -104,7 +104,11 @@ fun ProductListView(productList: LazyPagingItems<Product>, onItemClick: (id: Int
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Adaptive(150.dp),
     ) {
-        optimizedLazyList(items = productList) { _, product ->
+        optimizedLazyList(
+            items = productList,
+            key = { it.id },
+            contentType = { "product" }
+        ) { _, product ->
             ProductShowItem(
                 product = product, onClick = onItemClick
             )
